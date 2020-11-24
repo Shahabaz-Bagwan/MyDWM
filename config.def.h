@@ -94,6 +94,11 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_e,      quit,           {0} },
+  { 0, XF86XKAudioMute,		        spawn,		SHCMD("pactl set-sink-mute @DEFAULT_SINK@ toggle") },
+	{ 0, XF86XKAudioRaiseVolume,	  spawn,		SHCMD("pactl set-sink-volume @DEFAULT_SINK@ +5%") },
+	{ 0, XF86XKAudioRaiseVolume,	  spawn,		SHCMD("pactl set-sink-volume @DEFAULT_SINK@ +5%") },
+	{ 0, XF86XKMonBrightnessUp,	    spawn,		SHCMD("xbacklight -inc 5") },
+	{ 0, XF86XKMonBrightnessDown,	  spawn,		SHCMD("xbacklight -dec 5") },
 };
 
 /* button definitions */
