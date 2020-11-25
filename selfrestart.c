@@ -5,13 +5,13 @@
 #include <stdlib.h>
 
 /**
-  + * Magically finds the current's executable path
-  + *
-  + * I'm doing the do{}while(); trick because Linux (what I'm running) is not
-  + * POSIX compilant and so lstat() cannot be trusted on /proc entries
-  + *
-  + * @return char* the path of the current executable
-  + */
+ * Magically finds the current's executable path
+ *
+ * I'm doing the do{}while(); trick because Linux (what I'm running) is not
+ * POSIX compilant and so lstat() cannot be trusted on /proc entries
+ *
+ * @return char* the path of the current executable
+ */
 char *get_dwm_path(){
     struct stat s;
     int r, length, rate = 42;
@@ -49,11 +49,11 @@ char *get_dwm_path(){
 }
 
 /**
-  + * self-restart
-  + *
-  + * Initially inspired by: Yu-Jie Lin
-  + * https://sites.google.com/site/yjlnotes/notes/dwm
-  + */
+ * self-restart
+ *
+ * Initially inspired by: Yu-Jie Lin
+ * https://sites.google.com/site/yjlnotes/notes/dwm
+ */
 void self_restart(const Arg *arg) {
     char *const argv[] = {get_dwm_path(), NULL};
 
