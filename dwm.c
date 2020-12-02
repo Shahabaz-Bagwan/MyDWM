@@ -1628,7 +1628,7 @@ resizeclient(Client *c, int x, int y, int w, int h)
 			wc.border_width = 0;
 		} else {
 			gapoffset = gappx;
-			gapincr = 2 * gappx;
+			gapincr = gappx;
 		}
 	}
 
