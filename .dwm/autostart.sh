@@ -17,5 +17,6 @@ compton &
 nm-applet &
 blueman-applet &
 slimbookbattery &
+pasystray &
 
 exit 0
