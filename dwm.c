@@ -35,6 +35,7 @@
 #include <X11/Xatom.h>
 #include <X11/Xlib.h>
 #include <X11/Xproto.h>
+#include <X11/Xresource.h>
 #include <X11/Xutil.h>
 #ifdef XINERAMA
 #include <X11/extensions/Xinerama.h>
@@ -57,6 +58,21 @@
 #define HEIGHT(X)               ((X)->h + 2 * (X)->bw)
 #define TAGMASK                 ((1 << LENGTH(tags)) - 1)
 #define TEXTW(X)                (drw_fontset_getwidth(drw, (X)) + lrpad)
+#define XRDB_LOAD_COLOR(R,V)    if (XrmGetResource(xrdb, R, NULL, &type, &value) == True) { \
+                                  if (value.addr != NULL && strnlen(value.addr, 8) == 7 && value.addr[0] == '#') { \
+                                    int i = 1; \
+                                    for (; i <= 6; i++) { \
+                                      if (value.addr[i] < 48) break; \
+                                      if (value.addr[i] > 57 && value.addr[i] < 65) break; \
+                                      if (value.addr[i] > 70 && value.addr[i] < 97) break; \
+                                      if (value.addr[i] > 102) break; \
+                                    } \
+                                    if (i == 7) { \
+                                      strncpy(V, value.addr, 7); \
+                                      V[7] = '\0'; \
+                                    } \
+                                  } \
+                                }
 
 #define SYSTEM_TRAY_REQUEST_DOCK    0
 
@@ -200,6 +216,7 @@ static void focus(Client *c);
 static void focusin(XEvent *e);
 static void focusmon(const Arg *arg);
 static void focusstack(const Arg *arg);
+static int getdwmblockspid();
 static int getrootptr(int *x, int *y);
 static long getstate(Window w);
 static unsigned int getsystraywidth();
@@ -209,6 +226,7 @@ static void grabkeys(void);
 static void incnmaster(const Arg *arg);
 static void keypress(XEvent *e);
 static void killclient(const Arg *arg);
+static void loadxrdb(void);
 static void manage(Window w, XWindowAttributes *wa);
 static void mappingnotify(XEvent *e);
 static void maprequest(XEvent *e);
@@ -245,6 +263,7 @@ static void setup(void);
 static void seturgent(Client *c, int urg);
 static void showhide(Client *c);
 static void sigchld(int unused);
+static void sigdwmblocks(const Arg *arg);
 static void spawn(const Arg *arg);
 static Monitor *systraytomon(Monitor *m);
 static void tag(const Arg *arg);
@@ -279,6 +298,7 @@ static Client *wintosystrayicon(Window w);
 static int xerror(Display *dpy, XErrorEvent *ee);
 static int xerrordummy(Display *dpy, XErrorEvent *ee);
 static int xerrorstart(Display *dpy, XErrorEvent *ee);
+static void xrdb(const Arg *arg);
 static void zoom(const Arg *arg);
 
 /* variables */
@@ -286,6 +306,8 @@ static Systray *systray =  NULL;
 static const char broken[] = "broken";
 static char stext[256];
 static char rawstext[256];
+static int dwmblockssig;
+pid_t dwmblockspid = 0;
 static int statuscmdn;
 static char lastbutton[] = "-";
 static int screen;
@@ -491,7 +513,7 @@ buttonpress(XEvent *e)
   Client *c;
   Monitor *m;
   XButtonPressedEvent *ev = &e->xbutton;
-	*lastbutton = '0' + ev->button;
+  *lastbutton = '0' + ev->button;
 
   click = ClkRootWin;
   /* focus monitor if necessary */
@@ -510,13 +532,13 @@ buttonpress(XEvent *e)
       arg.ui = 1 << i;
     } else if (ev->x < x + blw)
       click = ClkLtSymbol;
-		else if (ev->x > (x = selmon->ww - TEXTW(stext) - getsystraywidth() + lrpad)) {
+    else if (ev->x > (x = selmon->ww - TEXTW(stext) - getsystraywidth() + lrpad)) {
       click = ClkStatusText;
 
 			char *text = rawstext;
 			int i = -1;
 			char ch;
-			statuscmdn = 0;
+			dwmblockssig = 0;
 			while (text[++i]) {
 				if ((unsigned char)text[i] < ' ') {
 					ch = text[i];
@@ -526,7 +548,7 @@ buttonpress(XEvent *e)
 					text += i+1;
 					i = -1;
 					if (x >= ev->x) break;
-					if (ch <= LENGTH(statuscmds)) statuscmdn = ch - 1;
+					dwmblockssig = ch;
 				}
 			}
 		} else
@@ -1048,6 +1070,18 @@ getatomprop(Client *c, Atom prop)
 }
 
 int
+getdwmblockspid()
+{
+	char buf[16];
+	FILE *fp = popen("pidof -s dwmblocks", "r");
+	fgets(buf, sizeof(buf), fp);
+	pid_t pid = strtoul(buf, NULL, 10);
+	pclose(fp);
+	dwmblockspid = pid;
+	return pid != 0 ? 0 : -1;
+}
+
+int
 getrootptr(int *x, int *y)
 {
   int di;
@@ -1198,6 +1232,37 @@ killclient(const Arg *arg)
     XSetErrorHandler(xerror);
     XUngrabServer(dpy);
   }
+}
+
+void
+loadxrdb()
+{
+  Display *display;
+  char * resm;
+  XrmDatabase xrdb;
+  char *type;
+  XrmValue value;
+
+  display = XOpenDisplay(NULL);
+
+  if (display != NULL) {
+    resm = XResourceManagerString(display);
+
+    if (resm != NULL) {
+      xrdb = XrmGetStringDatabase(resm);
+
+      if (xrdb != NULL) {
+        XRDB_LOAD_COLOR("dwm.normbordercolor", normbordercolor);
+        XRDB_LOAD_COLOR("dwm.normbgcolor", normbgcolor);
+        XRDB_LOAD_COLOR("dwm.normfgcolor", normfgcolor);
+        XRDB_LOAD_COLOR("dwm.selbordercolor", selbordercolor);
+        XRDB_LOAD_COLOR("dwm.selbgcolor", selbgcolor);
+        XRDB_LOAD_COLOR("dwm.selfgcolor", selfgcolor);
+      }
+    }
+  }
+
+  XCloseDisplay(display);
 }
 
 void
@@ -2078,14 +2143,31 @@ sigchld(int unused)
 }
 
 void
+sigdwmblocks(const Arg *arg)
+{
+	union sigval sv;
+	sv.sival_int = (dwmblockssig << 8) | arg->i;
+	if (!dwmblockspid)
+		if (getdwmblockspid() == -1)
+			return;
+
+	if (sigqueue(dwmblockspid, SIGUSR1, sv) == -1) {
+		if (errno == ESRCH) {
+			if (!getdwmblockspid())
+				sigqueue(dwmblockspid, SIGUSR1, sv);
+		}
+	}
+}
+
+void
 spawn(const Arg *arg)
 {
   if (arg->v == dmenucmd)
     dmenumon[0] = '0' + selmon->num;
-	else if (arg->v == statuscmd) {
-		statuscmd[2] = statuscmds[statuscmdn];
-		setenv("BUTTON", lastbutton, 1);
-	}
+  else if (arg->v == statuscmd) {
+    statuscmd[2] = statuscmds[statuscmdn];
+    setenv("BUTTON", lastbutton, 1);
+  }
   if (fork() == 0) {
     if (dpy)
       close(ConnectionNumber(dpy));
@@ -2473,7 +2555,7 @@ updatesizehints(Client *c)
 void
 updatestatus(void)
 {
-	if (!gettextprop(root, XA_WM_NAME, rawstext, sizeof(rawstext)))
+  if (!gettextprop(root, XA_WM_NAME, rawstext, sizeof(rawstext)))
     strcpy(stext, "dwm-"VERSION);
 	else
 		copyvalidchars(stext, rawstext);
@@ -2740,6 +2822,17 @@ systraytomon(Monitor *m) {
 }
 
 void
+xrdb(const Arg *arg)
+{
+  loadxrdb();
+  int i;
+  for (i = 0; i < LENGTH(colors); i++)
+                scheme[i] = drw_scm_create(drw, colors[i], 3);
+  focus(NULL);
+  arrange(NULL);
+}
+
+void
 zoom(const Arg *arg)
 {
   Client *c = selmon->sel;
@@ -2765,6 +2858,8 @@ main(int argc, char *argv[])
   if (!(dpy = XOpenDisplay(NULL)))
     die("dwm: cannot open display");
   checkotherwm();
+        XrmInitialize();
+        loadxrdb();
   setup();
 #ifdef __OpenBSD__
   if (pledge("stdio rpath proc exec", NULL) == -1)

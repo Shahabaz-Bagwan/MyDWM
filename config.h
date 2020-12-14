@@ -12,17 +12,17 @@ static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "Inconsolata Nerd Font Mono:size=12" };
 static const char dmenufont[]       = "Inconsolata Nerd Font Mono:size=12";
-static const char col_gray1[]       = "#222222";
-static const char col_gray2[]       = "#444444";
-static const char col_gray3[]       = "#bbbbbb";
-static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#005577";
-static const char *colors[][3]      = {
-  /*               fg         bg         border   */
-  [SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-  [SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
+static char normbgcolor[]           = "#222222";
+static char normbordercolor[]       = "#444444";
+static char normfgcolor[]           = "#bbbbbb";
+static char selfgcolor[]            = "#eeeeee";
+static char selbordercolor[]        = "#005577";
+static char selbgcolor[]            = "#005577";
+static char *colors[][3] = {
+       /*               fg           bg           border   */
+       [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
+       [SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
 };
-
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
@@ -63,7 +63,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *roficmd[] = {"rofi", "-show", "drun", "-show-icons", "-theme", "~/.cache/wal/colors-rofi-dark.rasi", "-opacity=70", "-display-drun", " ", "-display-window", " ", "-display-run", " ", "-display-ssh", " "};
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", selfgcolor, NULL };
 static const char *termcmd[]  = { "st", NULL };
 
 #include <X11/XF86keysym.h>
@@ -117,6 +117,7 @@ static Key keys[] = {
   { MODKEY,                       XK_period, focusmon,       {.i = +1 } },
   { MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
   { MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+	{ MODKEY,                       XK_F5,     xrdb,           {.v = NULL } },
   { MODKEY,                       XK_minus,  setgaps,        {.i = -1 } },
   { MODKEY,                       XK_equal,  setgaps,        {.i = +1 } },
   { MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = 0  } },
@@ -138,9 +139,9 @@ static Key keys[] = {
   { MODKEY|ShiftMask,             XK_p,      spawn,           SHCMD("~/github/displaySelect.sh")},
   { 0,                            XK_Print,  spawn,           SHCMD("sleep 0.2; scrot -s ~/Pictures/scrot/%d_%m_%y_%H_%M_%S_scrot.png -e 'xclip -selection c -t image/png < $f'")},
   { ShiftMask,                    XK_Print,  spawn,           SHCMD("sleep 0.2; scrot ~/Pictures/scrot/%d_%m_%y_%H_%M_%S_scrot.png -e 'xclip -selection c -t image/png < $f'")},
-  { 0, XF86XK_AudioMute,          spawn,    SHCMD("pactl set-sink-mute @DEFAULT_SINK@ toggle") },
-  { 0, XF86XK_AudioRaiseVolume,   spawn,    SHCMD("pactl set-sink-volume @DEFAULT_SINK@ +5%") },
-  { 0, XF86XK_AudioLowerVolume,   spawn,    SHCMD("pactl set-sink-volume @DEFAULT_SINK@ -5%") },
+  { 0, XF86XK_AudioMute,          spawn,    SHCMD("pactl set-sink-mute @DEFAULT_SINK@ toggle; kill -44 $(pidof dwmblocks)") },
+  { 0, XF86XK_AudioRaiseVolume,   spawn,    SHCMD("pactl set-sink-volume @DEFAULT_SINK@ +5%; kill -44 $(pidof dwmblocks)") },
+  { 0, XF86XK_AudioLowerVolume,   spawn,    SHCMD("pactl set-sink-volume @DEFAULT_SINK@ -5%; kill -44 $(pidof dwmblocks)") },
   { 0, XF86XK_MonBrightnessUp,    spawn,    SHCMD("xbacklight -inc 5") },
   { 0, XF86XK_MonBrightnessDown,  spawn,    SHCMD("xbacklight -dec 5") },
 };
@@ -152,9 +153,9 @@ static Button buttons[] = {
   { ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
   { ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
   { ClkWinTitle,          0,              Button2,        zoom,           {0} },
-  { ClkStatusText,        0,              Button1,        spawn,          {.v = statuscmd } },
-  { ClkStatusText,        0,              Button2,        spawn,          {.v = statuscmd } },
-  { ClkStatusText,        0,              Button3,        spawn,          {.v = statuscmd } },
+	{ ClkStatusText,        0,              Button1,        sigdwmblocks,   {.i = 1} },
+	{ ClkStatusText,        0,              Button2,        sigdwmblocks,   {.i = 2} },
+	{ ClkStatusText,        0,              Button3,        sigdwmblocks,   {.i = 3} },
   { ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
   { ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
   { ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
