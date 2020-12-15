@@ -31,10 +31,12 @@ static const Rule rules[] = {
    *  WM_CLASS(STRING) = instance, class
    *  WM_NAME(STRING) = title
    */
-  /* class      instance    title       tags mask     isfloating   monitor    float x,y,w,h         floatborderpx*/
-  { "Gimp",     NULL,       NULL,       0,            0,           -1 },
-  { "Firefox",  NULL,       NULL,       0,       0,           -1,        50,50,500,500,        5 },
-  { "Blueman-manager",  NULL,       NULL,       0,       1,           1,        50,50,500,500,        5 },
+  /* class                   instance    title       tags mask     isfloating   monitor    float x,y,w,h         floatborderpx*/
+  { "Blueman-manager",        NULL,       NULL,       0,            1,           -1,        50,50,500,500,        2 },
+  { "arandr",                 NULL,       NULL,       0,            1,           -1,        50,50,700,500,        2 },
+  { "gsimplecal",             NULL,       NULL,       0,            1,           -1 },
+  { "lxappearance",           NULL,       NULL,       0,            1,           -1,        50,50,600,400,        2 },
+  { "pavucontrol",            NULL,       NULL,       0,            1,           -1,        50,50,600,400,        2 },
 };
 
 /* layout(s) */
