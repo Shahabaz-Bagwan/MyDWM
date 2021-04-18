@@ -31,13 +31,14 @@ static const Rule rules[] = {
    *  WM_CLASS(STRING) = instance, class
    *  WM_NAME(STRING) = title
    */
-  /* class                   instance    title       tags mask     isfloating   monitor    float x,y,w,h         floatborderpx*/
-  { "Blueman-manager",        NULL,       NULL,       0,            1,           -1,       50,50,500,500,        2 },
-  { "Arandr",                 NULL,       NULL,       0,            1,           -1,       50,50,700,500,        2 },
-  { "Gnome-calculator",             NULL,       NULL,       0,            1,           -1,       50,50,380,400,        2 },
-  { "Gsimplecal",             NULL,       NULL,       0,            1,           -1,       50,50,250,100,        2 },
-  { "Lxappearance",           NULL,       NULL,       0,            1,           -1,       50,50,600,400,        2 },
-  { "Pavucontrol",            NULL,       NULL,       0,            1,           -1,       50,50,600,400,        2 },
+  /* class                   instance    title             tags mask     isfloating   monitor    float x,y,w,h         floatborderpx*/
+  { "Blueman-manager",        NULL,       NULL,             0,            1,           -1,       50,50,500,500,        2 },
+  { "Arandr",                 NULL,       NULL,             0,            1,           -1,       50,50,700,500,        2 },
+  { "Gnome-calculator",       NULL,       NULL,             0,            1,           -1,       50,50,380,400,        2 },
+  { "Gsimplecal",             NULL,       NULL,             0,            1,           -1,       50,50,250,100,        2 },
+  { "Lxappearance",           NULL,       NULL,             0,            1,           -1,       50,50,600,400,        2 },
+  { "Pavucontrol",            NULL,       NULL,             0,            1,           -1,       50,50,600,400,        2 },
+  { "mpv",                    NULL,       "video0 - mpv",   0,            1,           -1,       1366,768,300,200,     2 },
 };
 
 /* layout(s) */
@@ -137,6 +138,7 @@ static Key keys[] = {
   { MODKEY,                       XK_w,      spawn,           SHCMD("firefox") },
   { MODKEY,                       XK_x,      spawn,           SHCMD("slock") },
   { MODKEY,                       XK_c,      spawn,           SHCMD("code") },
+  { MODKEY|ShiftMask,             XK_c,      spawn,           SHCMD("~/github/camtoggle.sh") },
   { MODKEY,                       XK_r,      spawn,           SHCMD("~/github/dmenurecord") },
   { MODKEY,                       XK_z,      spawn,           SHCMD("~/github/randomWallpaper.sh") },
   { MODKEY,                       XK_p,      spawn,           SHCMD("~/github/monitors.sh") },
