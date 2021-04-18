@@ -137,6 +137,7 @@ static Key keys[] = {
   { MODKEY,                       XK_w,      spawn,           SHCMD("firefox") },
   { MODKEY,                       XK_x,      spawn,           SHCMD("slock") },
   { MODKEY,                       XK_c,      spawn,           SHCMD("code") },
+  { MODKEY,                       XK_r,      spawn,           SHCMD("~/github/dmenurecord") },
   { MODKEY,                       XK_z,      spawn,           SHCMD("~/github/randomWallpaper.sh") },
   { MODKEY,                       XK_p,      spawn,           SHCMD("~/github/monitors.sh") },
   { MODKEY|ShiftMask,             XK_p,      spawn,           SHCMD("~/github/displaySelect.sh")},
