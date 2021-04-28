@@ -1,6 +1,7 @@
 #!/bin/bash
 export TERMINAL="/usr/local/bin/st"
 export EDITOR="/usr/bin/vim"
+export SUDO_ASKPASS="/usr/bin/ssh-askpass"
 export VISUAL=$EDITOR
 export RANGER_LOAD_DEFAULT_RC=FALSE
 setxkbmap -option caps:swapescape
