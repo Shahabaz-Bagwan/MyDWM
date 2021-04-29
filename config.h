@@ -18,12 +18,14 @@ static char normfgcolor[]           = "#bbbbbb";
 static char selfgcolor[]            = "#eeeeee";
 static char selbordercolor[]        = "#005577";
 static char selbgcolor[]            = "#005577";
-static char col_urgborder[]   = "#ff0000";
+static char urgbgcolor[]           = "#222222";
+static char urgbordercolor[]       = "#444444";
+static char urgfgcolor[]           = "#bbbbbb";
 static char *colors[][3] = {
        /*               fg           bg           border   */
        [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
        [SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
-       [SchemeUrg]  = { selfgcolor,  selbgcolor,  col_urgborder  },
+       [SchemeUrg]  = { urgfgcolor,  urgbgcolor,  urgbordercolor  },
 };
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5" };
