@@ -43,6 +43,7 @@ static const Rule rules[] = {
   { "Lxappearance",           NULL,       NULL,             0,            1,           -1,       50,50,600,400,        2 },
   { "Pavucontrol",            NULL,       NULL,             0,            1,           -1,       50,50,600,400,        2 },
   { "mpv",                    NULL,       "video0 - mpv",   0,            1,           -1,       1366,768,300,200,     2 },
+  //{ "tabbed",                 NULL,       NULL,             0,            1,           -1,       50,50,500,500,        2 },
 };
 
 /* layout(s) */
@@ -72,7 +73,10 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *roficmd[] = {"rofi", "-show", "drun", "-show-icons", "-theme", "~/.cache/wal/colors-rofi-dark.rasi", "-opacity=70", "-display-drun", " ", "-display-window", " ", "-display-run", " ", "-display-ssh", " "};
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", selfgcolor, NULL };
-static const char *termcmd[]  = { "st", NULL };
+static const char *termcmd[]  = {"st", NULL };
+static const char scratchpadname[] = "scratchpad";
+static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, NULL };
+//static const char *scratchpadcmd[] = { "tabbed", "-c", "-r", "2", "st", "-w", "''","-t", scratchpadname, "-g", "120x34", NULL };
 
 #include <X11/XF86keysym.h>
 /* commands spawned when clicking statusbar, the mouse button pressed is exported as BUTTON */
@@ -84,6 +88,7 @@ static Key keys[] = {
   /* type       modifier                      key        function        argument */
   { MODKEY,                       XK_d,      spawn,          {.v = roficmd } },
   { MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
+	{ MODKEY,                       XK_grave,  togglescratch,  {.v = scratchpadcmd } },
   { MODKEY,                       XK_b,      togglebar,      {0} },
   { MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
   { MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
