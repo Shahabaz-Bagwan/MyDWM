@@ -28,6 +28,5 @@ compton &
 
 nm-applet &
 blueman-applet &
-pasystray &
 
 exit 0
