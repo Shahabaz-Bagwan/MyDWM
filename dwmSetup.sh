@@ -90,3 +90,4 @@ cd ~/repos/dwmblocks
 sudo make install
 cd ~
 
+exit 0
