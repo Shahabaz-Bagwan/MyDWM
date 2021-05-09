@@ -1,4 +1,4 @@
 [Desktop Entry]
 Name=dwm
-Exec=myDwmStart.sh
+Exec=dwmStart
 Type=Application
