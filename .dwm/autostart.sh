@@ -23,6 +23,7 @@ killall dwmblocks nm-applet blueman-applet pasystray
 dwmblocks 2>&1 >/dev/null &
 
 compton &
+picom &
 
 ~/github/randomWallpaper.sh &
 

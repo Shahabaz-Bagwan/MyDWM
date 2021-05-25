@@ -10,7 +10,7 @@ static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display 
 static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "Inconsolata Nerd Font Mono:size=12" };
+static const char *fonts[]          = { "Inconsolata Nerd Font Mono:size=12", "JoyPixels:size10"};
 static const char dmenufont[]       = "Inconsolata Nerd Font Mono:size=12";
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
@@ -130,7 +130,7 @@ static Key keys[] = {
   { MODKEY|ControlMask|ShiftMask, XK_Left,   moveresizeedge, {.v = "L"} },
   { MODKEY|ControlMask|ShiftMask, XK_Right,  moveresizeedge, {.v = "R"} },
   { MODKEY,                       XK_s,      togglesticky,   {0} },
-  { MODKEY|ShiftMask,             XK_s,      spawn,          SHCMD("killall screenkey || screenkey &") },
+  { MODKEY|ShiftMask,             XK_s,      spawn,          SHCMD("killall screenkey || screenkey -s small &") },
   { MODKEY,                       XK_0,      view,           {.ui = ~0 } },
   { MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
   { MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
