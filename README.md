@@ -1,7 +1,7 @@
 ## Applied patches
 - autostart
 - actual fullscreen
-- useless gaps
+- vanity gaps
 - uniform gaps
 - systray
 - fixborder
@@ -18,7 +18,7 @@
 
 
 ### dwm - dynamic window manager
-============================
+----------------------
 dwm is an extremely fast, small, and dynamic window manager for X.
 
 
