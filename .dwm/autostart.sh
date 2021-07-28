@@ -25,7 +25,7 @@ dwmblocks 2>&1 >/dev/null &
 compton &
 picom &
 
-~/github/randomWallpaper.sh &
+randomWallpaper.sh &
 
 nm-applet &
 blueman-applet &
