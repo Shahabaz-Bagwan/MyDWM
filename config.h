@@ -10,7 +10,7 @@ static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display 
 static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "UbuntuMono Nerd Font Mono:size=12"};
+static const char *fonts[]          = { "UbuntuMono Nerd Font:size=12"};
 static const char dmenufont[]       = "RobotoMono Nerd Font Mono:size=12";
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
@@ -77,7 +77,7 @@ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont,
 
 static const char *termcmd[]  = {"st", NULL };
 static const char scratchpadname[] = "scratchpad";
-static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, NULL };
+static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "tmux", NULL };
 
 //static const char *scratchpadcmd[] = { "tabbed", "-c", "-r", "2", "st", "-w", "''","-t", scratchpadname, "-g", "120x34", NULL };
 
