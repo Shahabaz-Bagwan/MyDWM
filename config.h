@@ -83,7 +83,7 @@ static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "tmux", NULL 
 
 #include <X11/XF86keysym.h>
 /* commands spawned when clicking statusbar, the mouse button pressed is exported as BUTTON */
-static char *statuscmds[] = { "volume", "memory", "forecast", "battery", "clock" };
+static char *statuscmds[] = { "volume", "microphone" , "memory", "forecast", "battery", "clock" };
 static char *statuscmd[] = { "/bin/sh", "-c", NULL, NULL };
 
 #include "movestack.c"
