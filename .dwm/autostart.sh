@@ -4,8 +4,8 @@ export EDITOR="/usr/bin/vim"
 export SUDO_ASKPASS="/usr/bin/ssh-askpass"
 export VISUAL=$EDITOR
 export RANGER_LOAD_DEFAULT_RC=FALSE
-setxkbmap -option caps:swapescape
-setxkbmap -layout us -variant altgr-intl
+
+setxkbmap -layout "us, us" -variant "altgr-intl,colemak" -option grp:shifts_toggle caps:swapescape
 
 # Generic
 xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Enabled" 1
