@@ -151,7 +151,7 @@ static Key keys[] = {
   TAGKEYS(                        XK_8,                      7)
   TAGKEYS(                        XK_9,                      8)
   { MODKEY|ShiftMask,             XK_e,      quit,           {0} },
-  { MODKEY,                       XK_w,      spawn,           SHCMD("firefox") },
+  { MODKEY,                       XK_w,      spawn,           SHCMD("brave-browser") },
   { MODKEY|ShiftMask,             XK_w,      spawn,           SHCMD("wordlist.sh") },
   { MODKEY,                       XK_x,      spawn,           SHCMD("slock") },
   { MODKEY,                       XK_c,      spawn,           SHCMD("code") },
