@@ -42,6 +42,7 @@ static const Rule rules[] = {
   { "Gsimplecal",             NULL,       NULL,             0,            1,           -1,       50,50,250,100,        2 },
   { "Lxappearance",           NULL,       NULL,             0,            1,           -1,       50,50,600,400,        2 },
   { "Pavucontrol",            NULL,       NULL,             0,            1,           -1,       50,50,600,400,        2 },
+  { "kosole",		              NULL,       "scratchpad",     0,            1,           -1,       50,50,800,600,        2 },
   { "mpv",                    NULL,       "video0 - mpv",   0,            1,           -1,       1366,768,300,200,     2 },
   //{ "tabbed",                 NULL,       NULL,             0,            1,           -1,       50,50,500,500,        2 },
 };
@@ -75,9 +76,9 @@ static const char *roficmd[] = {"rofi", "-show", "drun", "-show-icons", "-theme"
 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", selfgcolor, NULL };
 
-static const char *termcmd[]  = {"st", NULL };
+static const char *termcmd[]  = {"kitty", NULL };
 static const char scratchpadname[] = "scratchpad";
-static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "tmux", NULL };
+static const char *scratchpadcmd[] = { "kitty", "-e", "--title", scratchpadname, NULL };
 
 //static const char *scratchpadcmd[] = { "tabbed", "-c", "-r", "2", "st", "-w", "''","-t", scratchpadname, "-g", "120x34", NULL };
 
