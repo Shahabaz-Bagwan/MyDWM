@@ -1,13 +1,13 @@
 #!/bin/bash
-export TERMINAL="/usr/local/bin/st"
-export EDITOR="/usr/bin/vim"
+export TERMINAL="/usr/bin/gnome-terminal"
+export EDITOR="/usr/local/bin"
 export SUDO_ASKPASS="/usr/bin/ssh-askpass"
 export VISUAL=$EDITOR
 export RANGER_LOAD_DEFAULT_RC=FALSE
 
 #setxkbmap -layout "us, us" -variant "altgr-intl,colemak" -option grp:shifts_toggle caps:backspace
 
-setxkbmap -layout "us" -variant "altgr-intl"
+setxkbmap us altgr-intl
 #-option caps:swapescape
 
 # Generic
@@ -26,9 +26,6 @@ killall dwmblocks nm-applet blueman-applet
 dwmblocks 2>&1 >/dev/null &
 
 compton -f -r 20 &
-picom &
-
-xbindkeysrc &
 
 randomWallpaper.sh &
 

@@ -42,7 +42,7 @@ static const Rule rules[] = {
   { "Gsimplecal",             NULL,       NULL,             0,            1,           -1,       50,50,250,100,        2 },
   { "Lxappearance",           NULL,       NULL,             0,            1,           -1,       50,50,600,400,        2 },
   { "Pavucontrol",            NULL,       NULL,             0,            1,           -1,       50,50,600,400,        2 },
-  { "kosole",		              NULL,       "scratchpad",     0,            1,           -1,       50,50,800,600,        2 },
+  { "kitty",                  "kitty",		"scratchpad",     0,            1,           -1,       50,50,800,600,        2 },
   { "mpv",                    NULL,       "video0 - mpv",   0,            1,           -1,       1366,768,300,200,     2 },
   //{ "tabbed",                 NULL,       NULL,             0,            1,           -1,       50,50,500,500,        2 },
 };
@@ -72,13 +72,13 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *roficmd[] = {"rofi", "-show", "drun", "-show-icons", "-theme", "~/.cache/wal/colors-rofi-dark.rasi", "-opacity=70", "-display-drun", " ", "-display-window", " ", "-display-run", " ", "-display-ssh", " "};
+static const char *roficmd[] = {"rofi", "-show", "drun", "-show-icons", "-theme", "~/.cache/wal/colors-rofi-light.rasi", "-opacity=70", "-display-drun", " ", "-display-window", " ", "-display-run", " ", "-display-ssh", " "};
 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", selfgcolor, NULL };
 
-static const char *termcmd[]  = {"kitty", NULL };
+static const char *termcmd[]  = {"gnome-terminal", NULL };
 static const char scratchpadname[] = "scratchpad";
-static const char *scratchpadcmd[] = { "kitty", "-e", "--title", scratchpadname, NULL };
+static const char *scratchpadcmd[] = { "kitty", "-T", scratchpadname, NULL };
 
 //static const char *scratchpadcmd[] = { "tabbed", "-c", "-r", "2", "st", "-w", "''","-t", scratchpadname, "-g", "120x34", NULL };
 
@@ -109,7 +109,7 @@ static Key keys[] = {
   { MODKEY,                       XK_Tab,    view,           {0} },
   { MODKEY|ShiftMask,             XK_q,      killclient,     {0} },
   { MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-  { MODKEY,                       XK_f,      spawn,          SHCMD("Thunar") },
+  { MODKEY,                       XK_f,      spawn,          SHCMD("nautilus") },
   { MODKEY|ShiftMask,             XK_f,      togglefullscr,  {0} },
   { MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
   { MODKEY,                       XK_space,  setlayout,      {0} },
@@ -152,8 +152,7 @@ static Key keys[] = {
   TAGKEYS(                        XK_8,                      7)
   TAGKEYS(                        XK_9,                      8)
   { MODKEY|ShiftMask,             XK_e,      quit,           {0} },
-  { MODKEY,                       XK_w,      spawn,           SHCMD("brave-browser") },
-  { MODKEY|ShiftMask,             XK_w,      spawn,           SHCMD("wordlist.sh") },
+  { MODKEY,                       XK_w,      spawn,           SHCMD("microsoft-edge") },
   { MODKEY,                       XK_x,      spawn,           SHCMD("slock") },
   { MODKEY,                       XK_c,      spawn,           SHCMD("code") },
   { MODKEY|ShiftMask,             XK_c,      spawn,           SHCMD("camtoggle.sh") },
