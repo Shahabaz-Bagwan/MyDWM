@@ -15,6 +15,7 @@
 - cfacts for vertical size adjust
 - urgent color
 - scratchpad
+- preservonrestart
 
 
 ### dwm - dynamic window manager
