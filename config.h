@@ -41,7 +41,7 @@ static const Rule rules[] = {
   { "Gnome-calculator",       NULL,       NULL,             0,            1,           -1,       50,50,380,400,        2 },
   { "Gsimplecal",             NULL,       NULL,             0,            1,           -1,       50,50,250,100,        2 },
   { "Lxappearance",           NULL,       NULL,             0,            1,           -1,       50,50,600,400,        2 },
-  { "Pavucontrol",            NULL,       NULL,             0,            1,           -1,       50,50,600,400,        2 },
+  { "Pavucontrol",            NULL,       NULL,             0,            1,           -1,       50,50,800,500,        2 },
   { "kitty",                  "kitty",		"scratchpad",     0,            1,           -1,       50,50,800,600,        2 },
   { "mpv",                    NULL,       "video0 - mpv",   0,            1,           -1,       1366,768,300,200,     2 },
   //{ "tabbed",                 NULL,       NULL,             0,            1,           -1,       50,50,500,500,        2 },
@@ -76,7 +76,7 @@ static const char *roficmd[] = {"rofi", "-show", "drun", "-show-icons", "-theme"
 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", selfgcolor, NULL };
 
-static const char *termcmd[]  = {"gnome-terminal", NULL };
+static const char *termcmd[]  = {"kittyStart.sh", NULL };
 static const char scratchpadname[] = "scratchpad";
 static const char *scratchpadcmd[] = { "kitty", "-T", scratchpadname, NULL };
 
@@ -109,7 +109,7 @@ static Key keys[] = {
   { MODKEY,                       XK_Tab,    view,           {0} },
   { MODKEY|ShiftMask,             XK_q,      killclient,     {0} },
   { MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-  { MODKEY,                       XK_f,      spawn,          SHCMD("nautilus") },
+  { MODKEY,                       XK_f,      spawn,          SHCMD("thunar") },
   { MODKEY|ShiftMask,             XK_f,      togglefullscr,  {0} },
   { MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
   { MODKEY,                       XK_space,  setlayout,      {0} },

@@ -1,8 +1,6 @@
 #!/bin/bash
 export TERMINAL="/usr/bin/gnome-terminal"
-export EDITOR="/usr/local/bin"
 export SUDO_ASKPASS="/usr/bin/ssh-askpass"
-export VISUAL=$EDITOR
 export RANGER_LOAD_DEFAULT_RC=FALSE
 
 #setxkbmap -layout "us, us" -variant "altgr-intl,colemak" -option grp:shifts_toggle caps:backspace
@@ -28,6 +26,7 @@ dwmblocks 2>&1 >/dev/null &
 compton -f -r 20 &
 
 randomWallpaper.sh &
+monitors.sh &
 
 nm-applet &
 blueman-applet &
